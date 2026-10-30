@@ -1,2 +1,3 @@
 # CPP-Java-Data-Structures-Algorithms
-This repository is to show my proof-of-concept work for software data structures and algorithms in C++ and Java
+
+Proof-of-concept data structures and algorithms in C++ and Java with a Docker + PowerShell CI/CD pipeline.
