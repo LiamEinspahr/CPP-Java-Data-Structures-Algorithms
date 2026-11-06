@@ -61,6 +61,7 @@ function Wait-DockerEngine {
     return $true                     # engine is answering
 }
 
+
 # First re-verify Docker Desktop installation
 $dockerDir = Get-InstallLocation -DisplayName 'Docker Desktop'
 $ImageName = "liam-cpp-java-ds-cicd-pipeline"
@@ -74,25 +75,23 @@ if (-not $dockerDir) {
 if (-not (Confirm-DockerRunning -ProcessName "Docker Desktop")) {
     Write-Host 'Starting Docker Desktop~' -ForegroundColor Green
     Start-Process "$dockerDir/Docker Desktop.exe"
-
-    if( -not (Wait-DockerEngine)) {
-        Write-Host "Docker engine did not become ready..." -ForegroundColor Red
-        exit 1
-    }
-
-    Write-Host "Docker engine is ready for use~" -ForegroundColor Green
 }
 else {
     Write-Host "Docker Desktop already running!" -ForegroundColor DarkYellow
-
-    Write-Host ""
-    if( -not (Wait-DockerEngine)) {
-        Write-Host "Docker engine did not become ready..." -ForegroundColor Red
-        exit 1
-    }
-
-    Write-Host 'Docker engine is ready~' -ForegroundColor Green
 }
 
+# Even if its running, check if it is ready to use
+if( -not (Wait-DockerEngine)) {
+    Write-Host "Docker engine did not become ready..." -ForegroundColor Red
+    exit 1
+}
+Write-Host 'Docker engine is ready~' -ForegroundColor Green
+
+
+# After checking
+    # 1. Installation
+    # 2. If its running
+    # 3. If its ready to use
+# Finally start using Docker
 docker start $ImageName
 docker wait $ImageName
