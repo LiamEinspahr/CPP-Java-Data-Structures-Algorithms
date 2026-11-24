@@ -92,6 +92,6 @@ Write-Host 'Docker engine is ready~' -ForegroundColor Green
     # 1. Installation
     # 2. If its running
     # 3. If its ready to use
+
 # Finally start using Docker
-docker start $ImageName
-docker wait $ImageName
+docker build -t $ImageName .

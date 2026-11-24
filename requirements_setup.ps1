@@ -74,4 +74,4 @@ if (-not (Test-Installed $searchVSCode)) {
     Write-Host "Visual Studio Code is already installed." -ForegroundColor Green
 }
 
-Write-Host "`nAll dependency checks complete!" -ForegroundColor Green
+Write-Host "All dependency checks complete!" -ForegroundColor Green
