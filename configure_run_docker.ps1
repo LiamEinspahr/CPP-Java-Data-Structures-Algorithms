@@ -1,3 +1,6 @@
+$ErrorActionPreference = 'Continue'
+Set-Location $PSScriptRoot
+
 # Looks up a program in the uninstall registry and returns its install folder to re-verify docker installation
 function Get-InstallLocation {
     param(
@@ -31,12 +34,12 @@ function Confirm-DockerRunning {
         [string]$ProcessName
     )
 
-    if(Get-Process $ProcessName) {
+    if(Get-Process $ProcessName -ErrorAction SilentlyContinue) {
         Write-Host "Found Docker Desktop Process~" -ForegroundColor Green
         return($true)
     }
 
-    Write-Host "Couldn't find running Docker Desktop process..." -ForegroundColor Red
+    Write-Host "Couldn't find running Docker Desktop process..." -ForegroundColor Cyan
     return($false)
 }
 
@@ -94,4 +97,4 @@ Write-Host 'Docker engine is ready~' -ForegroundColor Green
     # 3. If its ready to use
 
 # Finally start using Docker
-docker build -t $ImageName .
+docker build -t liam-cpp-java-ds-cicd-pipeline .

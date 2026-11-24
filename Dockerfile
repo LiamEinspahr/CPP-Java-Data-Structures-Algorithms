@@ -1,8 +1,8 @@
 # Filename: C++ Dockerfile / Blueprint
 # ===STAGE: os===
-FROM ubuntu:24.04 as os 
+FROM ubuntu:24.04 AS os 
 
-FROM os as create-working-dir
+FROM os AS create-working-dir
 # Create a working project directory
 WORKDIR /usr/src/app/cpp
 

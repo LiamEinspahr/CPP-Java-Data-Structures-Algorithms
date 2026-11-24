@@ -1,5 +1,6 @@
 #Requires -RunAsAdministrator
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Stop' # In the second script, make sure this is 'Continue' so there are no issues when waiting for Docker
+Set-Location $PSScriptRoot
 
 # We need to check for a few things before running the Dockerfile
 # 1. WSL
@@ -75,3 +76,23 @@ if (-not (Test-Installed $searchVSCode)) {
 }
 
 Write-Host "All dependency checks complete!" -ForegroundColor Green
+
+# 5. Await user input to continue to next steps (configure_run_docker.ps1)
+[bool]$userInput = $false
+Write-Host "`nHost environment setup complete.`n" -ForegroundColor Green
+$userConfirm = Read-Host -Prompt "To continue or stop, please input y (Yes) or n (No)  respectively"
+
+if($userConfirm -eq "y") {
+    $userInput = $true
+}
+
+if( -not ($userInput -eq $true)) {
+    Write-Host "Detected `"No`" (n) input, closing in 5 seconds`n" -ForegroundColor Yellow
+    Start-Sleep -Seconds 5
+    exit 0
+}
+
+Write-Host "Detected `"Yes`" (y) input, starting docker configuration and run in 5 seconds!`n" -ForegroundColor Cyan
+Start-Sleep -Seconds 5
+& "$PSScriptRoot\configure_run_docker.ps1"
+exit $LASTEXITCODE
